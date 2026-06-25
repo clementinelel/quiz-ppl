@@ -1,0 +1,122 @@
+[
+  {
+    "category": "Météo",
+    "question": "Que signifie QNH ?",
+    "answers": [
+      "Pression ramenée au niveau de la mer",
+      "Pression standard",
+      "Température extérieure",
+      "Altitude densité"
+    ],
+    "correct": 0,
+    "explanation": "Le QNH est la pression ramenée au niveau de la mer."
+  },
+  {
+    "category": "Météo",
+    "question": "Un METAR est :",
+    "answers": [
+      "Une prévision météo",
+      "Une observation météo",
+      "Un NOTAM",
+      "Une carte des vents"
+    ],
+    "correct": 1,
+    "explanation": "Le METAR est un message d'observation météorologique."
+  },
+  {
+    "category": "Navigation",
+    "question": "Une piste 09 est orientée vers :",
+    "answers": [
+      "090°",
+      "180°",
+      "270°",
+      "360°"
+    ],
+    "correct": 0,
+    "explanation": "Le numéro de piste correspond au cap magnétique."
+  },
+  {
+    "category": "Navigation",
+    "question": "Une ligne isogonale relie :",
+    "answers": [
+      "Températures égales",
+      "Déclinaison magnétique égale",
+      "Altitude égale",
+      "Pression égale"
+    ],
+    "correct": 1,
+    "explanation": "Elle relie les points de même déclinaison magnétique."
+  },
+  {
+    "category": "Altimétrie",
+    "question": "La pression standard est :",
+    "answers": [
+      "1013 hPa",
+      "1000 hPa",
+      "980 hPa",
+      "1020 hPa"
+    ],
+    "correct": 0,
+    "explanation": "La pression standard internationale est 1013 hPa."
+  },
+  {
+    "category": "Altimétrie",
+    "question": "Le QFE donne l'altitude :",
+    "answers": [
+      "Par rapport au niveau de la mer",
+      "Par rapport à l'aérodrome",
+      "Par rapport à 1013 hPa",
+      "Par rapport aux nuages"
+    ],
+    "correct": 1,
+    "explanation": "Le QFE donne la hauteur par rapport à l'aérodrome."
+  },
+  {
+    "category": "Espaces aériens",
+    "question": "La classe G est :",
+    "answers": [
+      "Contrôlée",
+      "Non contrôlée",
+      "Réservée militaire",
+      "Interdite"
+    ],
+    "correct": 1,
+    "explanation": "La classe G est un espace aérien non contrôlé."
+  },
+  {
+    "category": "Espaces aériens",
+    "question": "Un espace contrôlé signifie :",
+    "answers": [
+      "Aucun service",
+      "Service ATS fourni",
+      "Interdit aux VFR",
+      "Sans radio"
+    ],
+    "correct": 1,
+    "explanation": "Un espace contrôlé fournit un service ATS."
+  },
+  {
+    "category": "Facteurs humains",
+    "question": "La désorientation spatiale est causée par :",
+    "answers": [
+      "GPS",
+      "Sens vestibulaire",
+      "Pression cabine",
+      "Altitude"
+    ],
+    "correct": 1,
+    "explanation": "Elle vient du système vestibulaire."
+  },
+  {
+    "category": "Radio",
+    "question": "La fréquence aviation VHF est :",
+    "answers": [
+      "118-137 MHz",
+      "88-108 MHz",
+      "200-300 MHz",
+      "500-600 MHz"
+    ],
+    "correct": 0,
+    "explanation": "La bande aviation VHF est 118 à 137 MHz."
+  }
+]
