@@ -1,196 +1,90 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz PPL</title>
-
-<style>
-body{
-    font-family:Arial;
-    background:#f4f6f9;
-    margin:0;
-    padding:20px;
-}
-
-.container{max-width:800px;margin:auto;}
-
-h1{text-align:center;}
-
-.card{
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-}
-
-select,button{
-    padding:10px;
-    margin:5px;
-    border-radius:8px;
-}
-
-.question{font-size:1.3rem;margin:20px 0;}
-
-.answer{
-    display:block;
-    width:100%;
-    margin:8px 0;
-    padding:10px;
-    border:none;
-    border-radius:8px;
-    background:#e9edf3;
-    cursor:pointer;
-}
-
-.correct{background:#4CAF50;color:white;}
-.wrong{background:#e74c3c;color:white;}
-
-.progress{
-    height:12px;
-    background:#ddd;
-    border-radius:10px;
-    overflow:hidden;
-    margin:15px 0;
-}
-
-.progress-bar{
-    height:100%;
-    width:0%;
-    background:#4CAF50;
-}
-
-.hidden{display:none;}
-</style>
+    <title>Quiz PPL</title>
 </head>
-
 <body>
 
-<div class="container">
-<h1>✈️ Quiz PPL</h1>
+<h1>Quiz PPL</h1>
 
-<div class="card">
+<h2 id="question"></h2>
 
-<select id="category"></select>
-<button onclick="startQuiz()">Commencer</button>
-
-<div class="progress">
-<div id="bar" class="progress-bar"></div>
-</div>
-
-<div id="question" class="question"></div>
 <div id="answers"></div>
-<div id="explanation" class="hidden"></div>
 
-<div id="score"></div>
-
-</div>
-</div>
+<p id="result"></p>
+<p id="score"></p>
 
 <script>
 
-let questions = [];
-let quiz = [];
+const questions = [
+{
+    question: "Que signifie QNH ?",
+    answers: [
+        "Pression au niveau de la mer",
+        "Pression standard",
+        "Altitude densité",
+        "Température extérieure"
+    ],
+    correct: 0,
+    explanation: "Le QNH permet d'afficher l'altitude par rapport au niveau moyen de la mer."
+},
+{
+    question: "Une piste 27 est orientée vers ?",
+    answers: [
+        "090°",
+        "180°",
+        "270°",
+        "360°"
+    ],
+    correct: 2,
+    explanation: "27 correspond à un cap magnétique d'environ 270°."
+}
+];
+
 let current = 0;
 let score = 0;
 
-async function loadQuestions(){
-    const res = await fetch("questions.json");
-    questions = await res.json();
+function showQuestion() {
 
-    setupCategories();
-}
-
-function setupCategories(){
-    const select = document.getElementById("category");
-
-    const cats = [...new Set(questions.map(q => q.category))];
-
-    select.innerHTML = `<option value="all">Toutes les catégories</option>`;
-
-    cats.forEach(c=>{
-        select.innerHTML += `<option value="${c}">${c}</option>`;
-    });
-}
-
-function startQuiz(){
-
-    const cat = document.getElementById("category").value;
-
-    quiz = questions.filter(q =>
-        cat === "all" || q.category === cat
-    );
-
-    quiz = quiz.sort(() => Math.random() - 0.5);
-
-    current = 0;
-    score = 0;
-
-    show();
-}
-
-function show(){
-
-    if(current >= quiz.length){
-        document.getElementById("question").innerHTML =
-            `Terminé 🎉 Score : ${score}/${quiz.length}`;
-        document.getElementById("answers").innerHTML = "";
-        return;
-    }
-
-    const q = quiz[current];
+    const q = questions[current];
 
     document.getElementById("question").textContent = q.question;
 
-    const answers = document.getElementById("answers");
-    answers.innerHTML = "";
+    let html = "";
 
-    document.getElementById("explanation").classList.add("hidden");
-
-    q.answers.forEach((a,i)=>{
-
-        const btn = document.createElement("button");
-        btn.className = "answer";
-        btn.textContent = a;
-
-        btn.onclick = ()=>check(i);
-
-        answers.appendChild(btn);
+    q.answers.forEach((answer, index) => {
+        html += `<button onclick="check(${index})">${answer}</button><br><br>`;
     });
 
-    document.getElementById("bar").style.width =
-        (current/quiz.length)*100 + "%";
+    document.getElementById("answers").innerHTML = html;
 }
 
-function check(i){
+function check(choice) {
 
-    const q = quiz[current];
+    const q = questions[current];
 
-    const buttons = document.querySelectorAll(".answer");
-
-    buttons.forEach(b=>b.disabled=true);
-
-    if(i === q.correct){
-        buttons[i].classList.add("correct");
+    if (choice === q.correct) {
         score++;
-    }else{
-        buttons[i].classList.add("wrong");
-        buttons[q.correct].classList.add("correct");
+        document.getElementById("result").textContent = "✅ Correct";
+    } else {
+        document.getElementById("result").textContent =
+            "❌ Faux - " + q.explanation;
     }
 
-    document.getElementById("explanation").classList.remove("hidden");
-    document.getElementById("explanation").textContent = q.explanation;
+    current++;
 
     document.getElementById("score").textContent =
-        `Score : ${score}`;
+        `Score : ${score}/${questions.length}`;
 
-    setTimeout(()=>{
-        current++;
-        show();
-    },1200);
+    if (current < questions.length) {
+        setTimeout(showQuestion, 1500);
+    } else {
+        document.getElementById("question").textContent = "Quiz terminé";
+        document.getElementById("answers").innerHTML = "";
+    }
 }
 
-loadQuestions();
+showQuestion();
 
 </script>
 
