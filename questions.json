@@ -9,20 +9,237 @@
       "Altitude densité"
     ],
     "correct": 0,
-    "explanation": "Le QNH est la pression ramenée au niveau de la mer."
+    "explanation": "Le QNH est la pression ramenée au niveau moyen de la mer."
   },
   {
     "category": "Météo",
-    "question": "Un METAR est :",
+    "question": "Que signifie QFE ?",
     "answers": [
-      "Une prévision météo",
-      "Une observation météo",
-      "Un NOTAM",
-      "Une carte des vents"
+      "Pression au niveau de la mer",
+      "Pression au niveau de l’aérodrome",
+      "Pression standard",
+      "Température ISA"
     ],
     "correct": 1,
-    "explanation": "Le METAR est un message d'observation météorologique."
+    "explanation": "Le QFE est la pression mesurée au niveau de l’aérodrome."
   },
+  {
+    "category": "Météo",
+    "question": "Que mesure un METAR ?",
+    "answers": [
+      "Une prévision",
+      "Une observation météo",
+      "Un radar",
+      "Un NOTAM"
+    ],
+    "correct": 1,
+    "explanation": "Le METAR est un message d’observation météorologique."
+  },
+  {
+    "category": "Météo",
+    "question": "Que signifie TAF ?",
+    "answers": [
+      "Observation météo",
+      "Prévision météo",
+      "Carte des vents",
+      "Alerte turbulence"
+    ],
+    "correct": 1,
+    "explanation": "Le TAF est une prévision météorologique."
+  },
+  {
+    "category": "Météo",
+    "question": "Une rafale de vent est appelée :",
+    "answers": [
+      "Gust",
+      "Wind shear",
+      "Front froid",
+      "Cumulus"
+    ],
+    "correct": 0,
+    "explanation": "Une rafale correspond à un 'gust'."
+  },
+  {
+    "category": "Météo",
+    "question": "Le wind shear est :",
+    "answers": [
+      "Un changement brutal de direction et vitesse du vent",
+      "Une pression stable",
+      "Une nuage élevé",
+      "Une température constante"
+    ],
+    "correct": 0,
+    "explanation": "Le wind shear est un cisaillement du vent dangereux."
+  },
+  {
+    "category": "Météo",
+    "question": "Les nuages cumulonimbus sont associés à :",
+    "answers": [
+      "Temps calme",
+      "Orages",
+      "Brouillard",
+      "Vent léger"
+    ],
+    "correct": 1,
+    "explanation": "Les cumulonimbus sont des nuages d’orage."
+  },
+  {
+    "category": "Météo",
+    "question": "Le brouillard se forme quand :",
+    "answers": [
+      "Air sec",
+      "Humidité élevée et refroidissement",
+      "Vent fort",
+      "Haute altitude"
+    ],
+    "correct": 1,
+    "explanation": "Le brouillard apparaît avec air saturé et refroidissement."
+  },
+  {
+    "category": "Météo",
+    "question": "Le point de rosée est :",
+    "answers": [
+      "Température de congélation",
+      "Température de saturation de l’air",
+      "Température extérieure",
+      "Température standard"
+    ],
+    "correct": 1,
+    "explanation": "C’est la température où l’air devient saturé."
+  },
+  {
+    "category": "Météo",
+    "question": "L’air chaud est :",
+    "answers": [
+      "Plus dense",
+      "Moins dense",
+      "Identique à l’air froid",
+      "Sans effet sur la portance"
+    ],
+    "correct": 1,
+    "explanation": "L’air chaud est moins dense."
+  },
+  {
+    "category": "Météo",
+    "question": "Une inversion de température est :",
+    "answers": [
+      "Température augmente avec l’altitude",
+      "Température diminue normalement",
+      "Vent fort",
+      "Pression stable"
+    ],
+    "correct": 0,
+    "explanation": "Une inversion signifie température qui augmente avec l’altitude."
+  },
+  {
+    "category": "Météo",
+    "question": "Un front froid provoque souvent :",
+    "answers": [
+      "Temps stable",
+      "Orages et turbulence",
+      "Air sec uniquement",
+      "Brouillard permanent"
+    ],
+    "correct": 1,
+    "explanation": "Un front froid est associé à instabilité."
+  },
+  {
+    "category": "Météo",
+    "question": "Un front chaud apporte :",
+    "answers": [
+      "Temps stable et nuages stratifiés",
+      "Orages violents",
+      "Vent nul",
+      "Air sec"
+    ],
+    "correct": 0,
+    "explanation": "Un front chaud donne des nuages stratifiés."
+  },
+  {
+    "category": "Météo",
+    "question": "La turbulence est causée par :",
+    "answers": [
+      "Air stable",
+      "Mouvements irréguliers de l’air",
+      "Pression constante",
+      "Visibilité élevée"
+    ],
+    "correct": 1,
+    "explanation": "La turbulence vient des mouvements d’air irréguliers."
+  },
+  {
+    "category": "Météo",
+    "question": "Les stratus sont :",
+    "answers": [
+      "Nuages d’orage",
+      "Nuages bas et uniformes",
+      "Nuages très élevés",
+      "Absence de nuages"
+    ],
+    "correct": 1,
+    "explanation": "Les stratus sont des nuages bas et étendus."
+  },
+  {
+    "category": "Météo",
+    "question": "Les cirrus sont :",
+    "answers": [
+      "Nuages bas",
+      "Nuages élevés et fins",
+      "Nuages d’orage",
+      "Brouillard"
+    ],
+    "correct": 1,
+    "explanation": "Les cirrus sont des nuages élevés."
+  },
+  {
+    "category": "Météo",
+    "question": "La visibilité est réduite par :",
+    "answers": [
+      "Air sec",
+      "Brouillard et précipitations",
+      "Haute pression",
+      "Température élevée"
+    ],
+    "correct": 1,
+    "explanation": "Brouillard et pluie réduisent la visibilité."
+  },
+  {
+    "category": "Météo",
+    "question": "La convection est :",
+    "answers": [
+      "Mouvement horizontal de l’air",
+      "Mouvement vertical de l’air",
+      "Pression constante",
+      "Vent nul"
+    ],
+    "correct": 1,
+    "explanation": "La convection est un mouvement vertical."
+  },
+  {
+    "category": "Météo",
+    "question": "Une masse d’air stable produit :",
+    "answers": [
+      "Orages",
+      "Temps calme",
+      "Turbulence forte",
+      "Vent violent"
+    ],
+    "correct": 1,
+    "explanation": "L’air stable limite la formation de nuages convectifs."
+  },
+  {
+    "category": "Météo",
+    "question": "Une masse d’air instable produit :",
+    "answers": [
+      "Temps calme",
+      "Orages et convection",
+      "Visibilité parfaite",
+      "Air sec uniquement"
+    ],
+    "correct": 1,
+    "explanation": "L’air instable favorise les orages."
+  }
+],
   {
     "category": "Navigation",
     "question": "Une piste 09 est orientée vers :",
