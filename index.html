@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Quiz PPL</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.1);
+}
+
+.menu{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+select,
+button{
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:16px;
+}
+
+button{
+    cursor:pointer;
+}
+
+.progress{
+    width:100%;
+    height:20px;
+    background:#ddd;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:20px;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:#4CAF50;
+    transition:.3s;
+}
+
+.question{
+    font-size:1.3rem;
+    margin-bottom:20px;
+}
+
+.answer{
+    width:100%;
+    text-align:left;
+    padding:12px;
+    margin-bottom:10px;
+    border:none;
+    border-radius:8px;
+    background:#e9edf3;
+}
+
+.answer:hover{
+    background:#d8e0eb;
+}
+
+.correct{
+    background:#4CAF50 !important;
+    color:white;
+}
+
+.wrong{
+    background:#e74c3c !important;
+    color:white;
+}
+
+.explanation{
+    margin-top:15px;
+    background:#f8f8f8;
+    padding:12px;
+    border-radius:8px;
+}
+
+.hidden{
+    display:none;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>✈️ Quiz PPL</h1>
+
+<div class="card">
+
+<div class="menu">
+
+<select id="categorySelect">
+    <option value="all">Toutes les catégories</option>
+</select>
+
+<button onclick="startQuiz()">
+    Commencer
+</button>
+
+<button onclick="toggleFailedMode()">
+    Questions ratées
+</button>
+
+</div>
+
+<div class="topbar">
+<div id="score">Score : 0</div>
+<div id="mode">Mode normal</div>
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progress"></div>
+</div>
+
+<div id="question" class="question">
+Choisissez une catégorie puis cliquez sur Commencer.
+</div>
+
+<div id="answers"></div>
+
+<div id="explanation" class="explanation hidden"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+category:"Altimétrie",
+question:"Que signifie QNH ?",
+answers:[
+"Pression ramenée au niveau de la mer",
+"Pression standard",
+"Altitude densité",
+"Température extérieure"
+],
+correct:0,
+explanation:"Le QNH permet d'afficher l'altitude par rapport au niveau de la mer."
+},
+
+{
+category:"Altimétrie",
+question:"La pression standard est :",
+answers:[
+"1013 hPa",
+"1000 hPa",
+"1020 hPa",
+"980 hPa"
+],
+correct:0,
+explanation:"La pression standard internationale est de 1013,25 hPa."
+},
+
+{
+category:"Navigation",
+question:"Une piste 27 est orientée vers :",
+answers:[
+"090°",
+"180°",
+"270°",
+"360°"
+],
+correct:2,
+explanation:"Le numéro de piste correspond au cap magnétique arrondi aux dizaines."
+},
+
+{
+category:"Navigation",
+question:"Une ligne isogonale relie :",
+answers:[
+"Points de même température",
+"Points de même déclinaison magnétique",
+"Points de même altitude",
+"Points de même pression"
+],
+correct:1,
+explanation:"Une ligne isogonale relie les points ayant la même déclinaison magnétique."
+},
+
+{
+category:"Météo",
+question:"Un METAR est :",
+answers:[
+"Une prévision",
+"Une observation météo",
+"Une carte météo",
+"Un NOTAM"
+],
+correct:1,
+explanation:"Le METAR est un message d'observation météorologique."
+},
+
+{
+category:"Espaces aériens",
+question:"En espace de classe G :",
+answers:[
+"Le contrôle est obligatoire",
+"Aucun service n'est possible",
+"L'espace est non contrôlé",
+"Le transpondeur est toujours obligatoire"
+],
+correct:2,
+explanation:"La classe G est un espace aérien non contrôlé."
+}
+
+];
+
+let currentQuiz = [];
+let currentQuestion = 0;
+let score = 0;
+let failedMode = false;
+
+function shuffle(array){
+    return [...array].sort(() => Math.random() - 0.5);
+}
+
+function getFailedQuestions(){
+    return JSON.parse(
+        localStorage.getItem("failedQuestions") || "[]"
+    );
+}
+
+function saveFailedQuestion(question){
+
+    let failed = getFailedQuestions();
+
+    if(!failed.includes(question)){
+        failed.push(question);
+    }
+
+    localStorage.setItem(
+        "failedQuestions",
+        JSON.stringify(failed)
+    );
+}
+
+function populateCategories(){
+
+    const select =
+        document.getElementById("categorySelect");
+
+    const categories =
+        [...new Set(
+            questions.map(q => q.category)
+        )];
+
+    categories.sort();
+
+    categories.forEach(category => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = category;
+        option.textContent = category;
+
+        select.appendChild(option);
+
+    });
+}
+
+function startQuiz(){
+
+    const category =
+        document.getElementById("categorySelect").value;
+
+    if(failedMode){
+
+        const failed =
+            getFailedQuestions();
+
+        currentQuiz =
+            questions.filter(
+                q => failed.includes(q.question)
+            );
+
+    }else{
+
+        if(category === "all"){
+
+            currentQuiz =
+                shuffle(questions);
+
+        }else{
+
+            currentQuiz =
+                shuffle(
+                    questions.filter(
+                        q => q.category === category
+                    )
+                );
+        }
+    }
+
+    if(currentQuiz.length === 0){
+
+        document.getElementById("question")
+            .textContent =
+            "Aucune question disponible.";
+
+        document.getElementById("answers")
+            .innerHTML = "";
+
+        return;
+    }
+
+    currentQuestion = 0;
+    score = 0;
+
+    updateScore();
+    showQuestion();
+}
+
+function updateScore(){
+
+    document.getElementById("score")
+        .textContent =
+        `Score : ${score}/${currentQuiz.length}`;
+}
+
+function updateProgress(){
+
+    const percent =
+        (currentQuestion /
+        currentQuiz.length) * 100;
+
+    document.getElementById("progress")
+        .style.width =
+        percent + "%";
+}
+
+function showQuestion(){
+
+    updateProgress();
+
+    const q =
+        currentQuiz[currentQuestion];
+
+    if(!q){
+
+        document.getElementById("question")
+            .innerHTML =
+            `🎉 Quiz terminé !<br><br>Résultat : ${score}/${currentQuiz.length}`;
+
+        document.getElementById("answers")
+            .innerHTML = "";
+
+        document.getElementById("explanation")
+            .classList.add("hidden");
+
+        document.getElementById("progress")
+            .style.width = "100%";
+
+        return;
+    }
+
+    document.getElementById("question")
+        .textContent = q.question;
+
+    const answersDiv =
+        document.getElementById("answers");
+
+    answersDiv.innerHTML = "";
+
+    document.getElementById("explanation")
+        .classList.add("hidden");
+
+    q.answers.forEach((answer,index)=>{
+
+        const btn =
+            document.createElement("button");
+
+        btn.className = "answer";
+        btn.textContent = answer;
+
+        btn.onclick =
+            () => checkAnswer(index);
+
+        answersDiv.appendChild(btn);
+    });
+}
+
+function checkAnswer(choice){
+
+    const q =
+        currentQuiz[currentQuestion];
+
+    const buttons =
+        document.querySelectorAll(".answer");
+
+    buttons.forEach(
+        b => b.disabled = true
+    );
+
+    if(choice === q.correct){
+
+        buttons[choice]
+            .classList.add("correct");
+
+        score++;
+
+    }else{
+
+        buttons[choice]
+            .classList.add("wrong");
+
+        buttons[q.correct]
+            .classList.add("correct");
+
+        saveFailedQuestion(q.question);
+    }
+
+    updateScore();
+
+    const exp =
+        document.getElementById("explanation");
+
+    exp.innerHTML =
+        q.explanation;
+
+    exp.classList.remove("hidden");
+
+    setTimeout(()=>{
+
+        currentQuestion++;
+
+        showQuestion();
+
+    },2000);
+}
+
+function toggleFailedMode(){
+
+    failedMode = !failedMode;
+
+    document.getElementById("mode")
+        .textContent =
+        failedMode
+        ? "Mode questions ratées"
+        : "Mode normal";
+
+    startQuiz();
+}
+
+populateCategories();
+
+</script>
+
+</body>
+</html>
